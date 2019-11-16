@@ -7,6 +7,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 /**
 *
@@ -16,6 +17,7 @@ import javax.persistence.Id;
 */
 @Getter
 @Setter
+@MappedSuperclass
 public class IdEntity {
 
     @Id
