@@ -18,5 +18,4 @@ public class BaseEntity {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
 
-
 }
