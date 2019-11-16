@@ -1,8 +1,11 @@
 package cn.dlj1.blog.core.api;
 
+import cn.dlj1.blog.core.entity.Article;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
 * 文章
@@ -15,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleController {
 
     @GetMapping
-    public void list(){
+    public List<Article> list(){
 
     }
 
