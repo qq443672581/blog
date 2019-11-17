@@ -3,7 +3,6 @@ package cn.dlj1.blog.core.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity(name = "article")
-@DynamicUpdate
 public class Article extends DateEntity {
 
     private String title;
@@ -23,6 +21,7 @@ public class Article extends DateEntity {
     private String memo;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private String content;
 
     @OrderBy("id asc")

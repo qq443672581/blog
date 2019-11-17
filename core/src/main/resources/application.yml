@@ -13,8 +13,9 @@ spring:
         hbm2ddl:
           auto: update
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        format_sql: false
+        format_sql: true
     show-sql: true
     open-in-view: true
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+    property-naming-strategy: SNAKE_CASE

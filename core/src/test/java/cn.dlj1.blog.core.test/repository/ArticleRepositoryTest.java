@@ -45,12 +45,15 @@ public class ArticleRepositoryTest {
         tag = tagRepository.save(tag);
 
         Article article = new Article();
-        article.setTitle("文章");
-        article.setContent("文章内容");
+        for (int i = 0; i < 100; i++) {
+            article = new Article();
+            article.setTitle("文章");
+            article.setContent("文章内容");
 
-        article.addTag(tag);
+            article.addTag(tag);
 
-        article = articleRepository.save(article);
+            article = articleRepository.save(article);
+        }
 
         articleId = article.getId();
         tagId = tag.getId();

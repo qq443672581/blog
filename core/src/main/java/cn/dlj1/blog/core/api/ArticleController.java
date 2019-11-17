@@ -1,14 +1,14 @@
 package cn.dlj1.blog.core.api;
 
 import cn.dlj1.blog.core.api.query.PageQuery;
+import cn.dlj1.blog.core.api.vo.PageVO;
 import cn.dlj1.blog.core.entity.Article;
+import cn.dlj1.blog.core.entity.Tag;
 import cn.dlj1.blog.core.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 文章
@@ -24,18 +24,22 @@ public class ArticleController {
     private ArticleRepository articleRepository;
 
     @GetMapping
-    public List<Article> list(PageQuery query) {
-        Page<Article> page = articleRepository.findAll(query.toPageable());
-        return page.getContent();
+    public PageVO<Article> list(PageQuery query) {
+        Article a = new Article();
+        Tag tag = new Tag();
+        tag.setId(13L);
+        a.addTag(tag);
+
+        Page<Article> page = articleRepository.findAll(Example.of(a), query.toPageable());
+        return PageVO.of(page);
     }
 
     @GetMapping("/{id}")
-    public Article one(@PathVariable("id") Long id) {
+    public Article detail(@PathVariable("id") Long id) {
         Article article = articleRepository.getOne(id);
         return article;
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public Long insert(@RequestBody Article article) {
         Article save = articleRepository.save(article);
@@ -43,15 +47,13 @@ public class ArticleController {
     }
 
     @PutMapping("/{id}")
-    public Article update(@PathVariable("id") Long id, @RequestBody Article article) {
-        article = articleRepository.dynamicUpdate(id, article);
-        return article;
+    public void update(@PathVariable("id") Long id, @RequestBody Article article) {
+        articleRepository.dynamicUpdate(id, article);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Long id) {
         articleRepository.deleteById(id);
     }
-
 
 }

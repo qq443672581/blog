@@ -11,13 +11,13 @@ import org.springframework.data.domain.Sort;
 public class PageQuery extends Query {
 
     private int pageStart = 1;
-    private int pageSize = 20;
+    private int pageSize = 10;
 
     private String pageSortField = "id";
     private String pageSortType = "DESC";
 
     public Pageable toPageable() {
-        Sort.Order order = null;
+        Sort.Order order;
         if ("DESC".equalsIgnoreCase(pageSortType)) {
             order = Sort.Order.desc(pageSortField);
         } else {
