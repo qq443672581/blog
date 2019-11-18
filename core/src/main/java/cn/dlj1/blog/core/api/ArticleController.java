@@ -3,10 +3,10 @@ package cn.dlj1.blog.core.api;
 import cn.dlj1.blog.core.api.query.PageQuery;
 import cn.dlj1.blog.core.api.vo.PageVO;
 import cn.dlj1.blog.core.entity.Article;
-import cn.dlj1.blog.core.entity.Tag;
 import cn.dlj1.blog.core.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,19 +18,16 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/articles")
+@CacheConfig(cacheNames = "article")
 public class ArticleController {
 
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Cacheable(key = "#query.pageSortField + '-' +#query.pageSortType + '-' + #query.pageStart + '-' + #query.pageSize")
     @GetMapping
     public PageVO<Article> list(PageQuery query) {
-        Article a = new Article();
-        Tag tag = new Tag();
-        tag.setId(13L);
-        a.addTag(tag);
-
-        Page<Article> page = articleRepository.findAll(Example.of(a), query.toPageable());
+        Page<Article> page = articleRepository.findAll(query.toPageable());
         return PageVO.of(page);
     }
 

@@ -45,7 +45,7 @@ public class ArticleRepositoryTest {
         tag = tagRepository.save(tag);
 
         Article article = new Article();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 10; i++) {
             article = new Article();
             article.setTitle("文章");
             article.setContent("文章内容");
