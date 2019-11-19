@@ -1,5 +1,8 @@
 package cn.dlj1.blog.core.api.query;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.domain.PageRequest;
@@ -8,9 +11,12 @@ import org.springframework.data.domain.Sort;
 
 @Getter
 @Setter
+@ApiModel
 public class PageQuery extends Query {
 
+    @ApiModelProperty(name = "page_start")
     private int pageStart = 1;
+    @ApiParam(name = "page_size")
     private int pageSize = 10;
 
     private String pageSortField = "id";
