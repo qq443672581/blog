@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class PageVO<T> {
+public class PageVO<T> extends VO{
 
     private int pageStart;
     private int pageSize;

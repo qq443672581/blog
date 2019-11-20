@@ -16,7 +16,8 @@ public class PageQuery extends Query {
 
     @ApiModelProperty(name = "page_start")
     private int pageStart = 1;
-    @ApiParam(name = "page_size")
+
+    @ApiModelProperty(name = "page_size")
     private int pageSize = 10;
 
     private String pageSortField = "id";
@@ -34,4 +35,15 @@ public class PageQuery extends Query {
 
         return PageRequest.of(pageStart - 1, pageSize, sort);
     }
+
+    /**
+    * 緩存key
+    *
+    * @auth fivewords(443672581@qq.com)
+    * @date 2019/11/20 20:55
+    */
+    public String getCacheKey() {
+        return pageStart + "-" + pageSize + "-" + pageSortField + "-" + pageSortType;
+    }
+
 }
