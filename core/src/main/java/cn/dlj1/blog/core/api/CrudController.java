@@ -3,7 +3,7 @@ package cn.dlj1.blog.core.api;
 import cn.dlj1.blog.core.api.query.PageQuery;
 import cn.dlj1.blog.core.api.vo.PageVO;
 import cn.dlj1.blog.core.entity.IdEntity;
-import cn.dlj1.blog.core.repository.ExtJpaRepository;
+import cn.dlj1.blog.core.repository.ext.ExtJpaRepository;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.Getter;
@@ -13,7 +13,10 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 文章
@@ -34,9 +37,10 @@ public abstract class CrudController<T extends IdEntity> extends BaseController{
     private ControllerCacheManger cacheManger;
     private ExtJpaRepository<T, Long> repository;
 
+    @CrossOrigin("127.0.0.1")
     @ApiOperation("获取列表")
     @GetMapping
-    public PageVO<T> list(@ApiParam PageQuery query) {
+    public PageVO<T> list(@ApiParam @Validated PageQuery query) {
         PageVO<T> vo;
         if(null != cacheManger && null != (vo = cacheManger.getListCache().get(query.getCacheKey(),PageVO.class))){
             return vo;
@@ -54,7 +58,7 @@ public abstract class CrudController<T extends IdEntity> extends BaseController{
 
     @ApiOperation("获取详情")
     @GetMapping("/{id}")
-    public T detail(@PathVariable("id") Long id) {
+    public T detail(@PathVariable("id") @Validated @NotNull Long id) {
         T t;
 
         if(null != cacheManger){
@@ -79,7 +83,7 @@ public abstract class CrudController<T extends IdEntity> extends BaseController{
 
     @ApiOperation("添加记录")
     @PostMapping
-    public Long insert(@RequestBody @ApiParam(name = "entity", value = "数据") T t) {
+    public Long insert(@RequestBody @ApiParam(name = "entity", value = "数据") @Validated T t) {
         T save = repository.save(t);
 
         if(null != cacheManger){
@@ -91,7 +95,7 @@ public abstract class CrudController<T extends IdEntity> extends BaseController{
 
     @ApiOperation("修改记录")
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") Long id, @RequestBody T t) {
+    public void update(@PathVariable("id") Long id, @RequestBody @Validated T t) {
         repository.dynamicUpdate(id, t);
 
         if(null != cacheManger){
@@ -102,7 +106,7 @@ public abstract class CrudController<T extends IdEntity> extends BaseController{
 
     @ApiOperation("删除记录")
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") @Validated @NotNull Long id) {
         repository.deleteById(id);
 
         if(null != cacheManger){

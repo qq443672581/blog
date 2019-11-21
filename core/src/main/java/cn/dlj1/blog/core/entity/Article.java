@@ -3,8 +3,10 @@ package cn.dlj1.blog.core.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,14 @@ import java.util.List;
 @Entity(name = "article")
 public class Article extends DateEntity {
 
+    @NotNull
+    @Length(min = 1, max = 255)
+    @Column
     private String title;
 
+    @NotNull
+    @Length(min = 1, max = 255)
+    @Column
     private String memo;
 
     @Lob

@@ -1,4 +1,4 @@
-package cn.dlj1.blog.core.repository.impl;
+package cn.dlj1.blog.core.repository.ext;
 
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.repository.core.RepositoryMetadata;

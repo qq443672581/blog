@@ -1,6 +1,5 @@
-package cn.dlj1.blog.core.repository.impl;
+package cn.dlj1.blog.core.repository.ext;
 
-import cn.dlj1.blog.core.repository.ExtJpaRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;

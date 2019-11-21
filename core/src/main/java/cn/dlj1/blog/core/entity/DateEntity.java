@@ -1,5 +1,6 @@
 package cn.dlj1.blog.core.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +15,11 @@ import java.util.Date;
 @MappedSuperclass
 public class DateEntity extends IdEntity {
 
+    @ApiModelProperty(example = "2000-01-01 00:00:00")
     @Column(updatable = false)
     private Date createTime;
 
+    @ApiModelProperty(example = "2000-01-01 00:00:00")
     @Column(insertable = false)
     private Date updateTime;
 
