@@ -2,6 +2,7 @@ package cn.dlj1.blog.core.api;
 
 import cn.dlj1.blog.core.api.query.PageQuery;
 import cn.dlj1.blog.core.api.vo.PageVO;
+import cn.dlj1.blog.core.config.ValidateGroup;
 import cn.dlj1.blog.core.entity.IdEntity;
 import cn.dlj1.blog.core.repository.ext.ExtJpaRepository;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +38,6 @@ public abstract class CrudController<T extends IdEntity> extends BaseController{
     private ControllerCacheManger cacheManger;
     private ExtJpaRepository<T, Long> repository;
 
-    @CrossOrigin("127.0.0.1")
     @ApiOperation("获取列表")
     @GetMapping
     public PageVO<T> list(@ApiParam @Validated PageQuery query) {
@@ -83,7 +83,11 @@ public abstract class CrudController<T extends IdEntity> extends BaseController{
 
     @ApiOperation("添加记录")
     @PostMapping
-    public Long insert(@RequestBody @ApiParam(name = "entity", value = "数据") @Validated T t) {
+    public Long insert(
+            @RequestBody
+            @ApiParam(name = "entity", value = "数据")
+            @Validated(ValidateGroup.Insert.class)
+                    T t) {
         T save = repository.save(t);
 
         if(null != cacheManger){
@@ -95,7 +99,9 @@ public abstract class CrudController<T extends IdEntity> extends BaseController{
 
     @ApiOperation("修改记录")
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") Long id, @RequestBody @Validated T t) {
+    public void update(
+            @PathVariable("id") Long id,
+            @RequestBody @Validated(ValidateGroup.Update.class)  T t) {
         repository.dynamicUpdate(id, t);
 
         if(null != cacheManger){

@@ -1,5 +1,6 @@
 package cn.dlj1.blog.core.entity;
 
+import cn.dlj1.blog.core.config.ValidateGroup;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
@@ -17,7 +18,7 @@ import javax.validation.constraints.Size;
 @Entity(name = "user")
 public class User extends DateEntity{
 
-    @NotNull
+    @NotNull(groups = ValidateGroup.Insert.class)
     @Length(min = 6, max = 16)
     @Column(unique = true, length = 16, updatable = false, nullable = false)
     private String username;
